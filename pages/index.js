@@ -2,16 +2,17 @@ import { format, parseISO } from 'date-fns'
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
 import styles from '../styles/Home.module.css'
-import { allQuestionDates } from '../utils'
 
-// TODO - add "no available questions" state
+const questionsEndpoint = "/.netlify/functions/questions/"
+const answersEndpoint = "/.netlify/functions/submission-created/"
+
 const title = "Pop's Questions"
 
 export default function Home() {
 
   const [questions, setQuestions] = useState(null)
   useEffect(() => {
-    fetch('/.netlify/functions/questions/')
+    fetch(questionsEndpoint)
       .then(resp => resp.json())
       .then(data => {
         setQuestions(data)

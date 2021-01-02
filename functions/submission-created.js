@@ -1,5 +1,4 @@
 require('dotenv').config()
-const { getDateFromQuestionNumber } = require('../utils');
 
 var Airtable = require('airtable');
 Airtable.configure({
