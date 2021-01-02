@@ -45,8 +45,8 @@ export default function Home() {
 
       {
         (questions && questions.length > 0) && (
-          <form name="answers" method="POST" action="/thanks" data-netlify="true">
-            <input type="hidden" name="form-name" value="answers" />
+          <form name="new-answers" method="POST" action="/thanks" data-netlify="true">
+            <input type="hidden" name="form-name" value="new-answers" />
             <div className={styles.formField}>
               <label className={styles.label}>
                 Question date:
