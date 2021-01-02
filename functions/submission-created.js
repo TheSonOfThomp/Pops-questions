@@ -11,7 +11,7 @@ exports.handler = async function(data) {
 
   const payload = JSON.parse(data.body).payload.data
 
-  if (payload['form-name'] === 'new-answers') {
+  if (payload['form-name'] === 'answers') {
     await handleAnswer(payload.questionID, payload.answer)
   }
 
