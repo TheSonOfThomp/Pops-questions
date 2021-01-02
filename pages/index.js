@@ -18,7 +18,7 @@ export default function Home() {
         <div className={styles.formField}>
           <label className={styles.label}>
             Week of:
-            <select className={styles.select}>
+            <select name="weekOf" className={styles.select}>
               {
                 allQuestionDates.map(date => (
                   <option value={date}>{date}</option>
@@ -32,7 +32,7 @@ export default function Home() {
           <p className={styles.question}>
             Maecenas faucibus mollis interdum. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Maecenas faucibus mollis interdum. Maecenas faucibus mollis interdum. Aenean lacinia bibendum nulla sed consectetur. Aenean lacinia bibendum nulla sed consectetur?
           </p>
-          <textarea className={styles.textarea}></textarea>
+          <textarea name="answer" className={styles.textarea}></textarea>
         </div>
 
         <div className={styles.formField}>

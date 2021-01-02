@@ -17,7 +17,7 @@ export default function Ask() {
         <div className={styles.formField}>
           <label className={styles.label}>
             For week of:
-            <select className={styles.select}>
+            <select name="weekOf" className={styles.select}>
               <option>Jan 10</option>
             </select>
           </label>
@@ -27,7 +27,7 @@ export default function Ask() {
           <label className={styles.label}>
             Question:
           </label>
-          <textarea className={styles.textarea}></textarea>
+          <textarea name="question" className={styles.textarea}></textarea>
         </div>
 
         <div className={styles.formField}>
