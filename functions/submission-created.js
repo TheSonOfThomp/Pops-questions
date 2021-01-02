@@ -10,7 +10,7 @@ var base = Airtable.base('app6xMKJyDvXBg6uV');
 exports.handler = async function(data) {
 
   const payload = JSON.parse(data.body).payload.data
-
+  console.log(payload);
   if (payload['form-name'] === 'answers') {
     await handleAnswer(payload.questionID, payload.answer)
   }
