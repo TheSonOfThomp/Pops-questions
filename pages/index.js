@@ -2,6 +2,8 @@ import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import { allQuestionDates } from '../utils'
 
+// TODO - add "no available questions" state
+
 export default function Home() {
   return (
     <main className={styles.container}>
@@ -34,7 +36,7 @@ export default function Home() {
         </div>
 
         <div className={styles.formField}>
-          <button type="submit" className={styles.submit}>Submit</button>
+          <button type="submit" action="/thanks" className={`${styles.submit} ${styles.button}`}>Submit</button>
         </div>
       </form>
 

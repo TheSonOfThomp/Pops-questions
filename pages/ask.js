@@ -31,7 +31,7 @@ export default function Ask() {
         </div>
 
         <div className={styles.formField}>
-          <button type="submit" className={styles.submit}>Submit</button>
+          <button type="submit" action="/ask" className={`${styles.submit} ${styles.button}`}>Submit</button>
         </div>
       </form>
 

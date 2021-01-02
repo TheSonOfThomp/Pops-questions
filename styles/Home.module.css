@@ -42,6 +42,9 @@
 
 .submit {
   float: right;
+}
+
+.button {
   background-color: var(--color-navy);
   box-shadow: 0 1px 4px rgba(0,0,0,0.25);
   color: white;
@@ -57,12 +60,12 @@
   outline-offset: 1px;
 }
 
-.submit:hover,
-.submit:focus {
+.button:hover,
+.button:focus {
   background-color: var(--color-navy-80);
   box-shadow: 0 2px 8px rgba(0,0,0,0.25);
 }
 
-.submit:not(:focus-visible) {
+.button:not(:focus-visible) {
   outline: unset;
 }
