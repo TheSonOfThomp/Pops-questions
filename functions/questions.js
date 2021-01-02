@@ -1,19 +1,25 @@
-const ID = "f93e0d12-48dc-4fc3-87da-c72f3776e2f6"
-const endpoint = `/api/v1/sites/${ID}/forms`
+require('dotenv').config()
+var Airtable = require('airtable');
+Airtable.configure({
+  endpointUrl: 'https://api.airtable.com',
+  apiKey: process.env.AIRTABLE_API_KEY
+});
+var base = Airtable.base('app6xMKJyDvXBg6uV');
 
-exports.handler = async function() {
-  const data = await fetch(endpoint)
-    .catch(err => {
-      console.log(err);
+exports.handler = async function () {
+
+  const records = await new Promise((resolve, reject) => {
+    base('Questions').select({
+      view: 'Grid view',
+      filterByFormula: "AND({Question Date}, {Question}, IS_BEFORE({Question Date}, TODAY()), NOT({Answer}))"
+    }).all((err, records) => {
+      if (err) {reject(err)}
+      resolve(records)
     })
-    .then(resp => resp.json)
-    .then(data => data)
-
-  console.log(data);
+  })
 
   return {
     statusCode: 200,
-    body: data
-  };
-  
+    body: JSON.stringify(records)
+  }
 }

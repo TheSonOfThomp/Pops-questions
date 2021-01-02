@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
+import { allQuestionDates } from '../utils'
 
 const title = "Ask Pop a Question"
 
@@ -8,7 +9,7 @@ export default function Ask() {
     <main className={styles.container}>
       <Head>
         <title>{title}</title>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/pop.jpeg" />
       </Head>
 
       <h1 className={styles.header}>{title}</h1>
@@ -20,7 +21,11 @@ export default function Ask() {
           <label className={styles.label}>
             For week of:
             <select name="weekOf" className={styles.select}>
-              <option>Jan 10</option>
+              {
+                allQuestionDates.map((date, i) => (
+                  <option value={i} key={i}>{date}</option>
+                ))
+              }
             </select>
           </label>
         </div>

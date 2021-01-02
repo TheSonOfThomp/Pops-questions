@@ -8,7 +8,7 @@ export default function Thanks() {
     <main className={styles.container}>
       <Head>
         <title>{title}</title>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/pop.jpeg" />
       </Head>
 
       <h1 className={styles.header}>{title}</h1>
