@@ -1,4 +1,4 @@
-import { format } from 'date-fns'
+import { format, parseISO } from 'date-fns'
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
 import styles from '../styles/Home.module.css'
@@ -26,7 +26,7 @@ export default function Home() {
   }, [questions])
 
   const formatDate = (str) => {
-    return format(new Date(`${str} EST`), 'MMM do yyyy')
+    return format(parseISO(str), 'MMM do yyyy')
   }
 
   function handleQuestionChange (e) {
