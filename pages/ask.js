@@ -14,6 +14,8 @@ export default function Ask() {
       <h1 className={styles.header}>{title}</h1>
 
       <form name="ask" method="POST" action="/ask" data-netlify="true">
+        <input type="hidden" name="form-name" value="ask" />
+
         <div className={styles.formField}>
           <label className={styles.label}>
             For week of:

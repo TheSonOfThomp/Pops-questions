@@ -3,18 +3,20 @@ import styles from '../styles/Home.module.css'
 import { allQuestionDates } from '../utils'
 
 // TODO - add "no available questions" state
+const title = "Pop's Questions"
 
 export default function Home() {
   return (
     <main className={styles.container}>
       <Head>
-        <title>Pop's Answers</title>
+        <title>{title}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <h1 className={styles.header}>Pop's Answers</h1>
+      <h1 className={styles.header}>{title}</h1>
 
       <form name="answers" method="POST" action="/thanks" data-netlify="true">
+        <input type="hidden" name="form-name" value="answers" />
         <div className={styles.formField}>
           <label className={styles.label}>
             Week of:
