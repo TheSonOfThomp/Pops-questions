@@ -62,6 +62,9 @@ export default function Home() {
               <p className={styles.question}>
                 {selectedQuestion && selectedQuestion.fields.Question}
               </p>
+              {(selectedQuestion && selectedQuestion.fields["Asked By"]) && (
+                <p>Asked by: {selectedQuestion.fields["Asked By"]}</p>
+              )}
               <textarea name="answer" className={styles.textarea}></textarea>
             </div>
 
