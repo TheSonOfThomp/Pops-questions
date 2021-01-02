@@ -14,7 +14,7 @@ export default function Home() {
 
       <h1 className={styles.header}>Pop's Answers</h1>
 
-      <form name="answers" method="POST" data-netlify="true">
+      <form name="answers" method="POST" action="/thanks" data-netlify="true">
         <div className={styles.formField}>
           <label className={styles.label}>
             Week of:
@@ -36,7 +36,7 @@ export default function Home() {
         </div>
 
         <div className={styles.formField}>
-          <button type="submit" action="/thanks" className={`${styles.submit} ${styles.button}`}>Submit</button>
+          <button type="submit" className={`${styles.submit} ${styles.button}`}>Submit</button>
         </div>
       </form>
 

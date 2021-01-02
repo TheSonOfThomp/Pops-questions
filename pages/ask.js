@@ -13,7 +13,7 @@ export default function Ask() {
 
       <h1 className={styles.header}>{title}</h1>
 
-      <form name="ask" method="POST" data-netlify="true">
+      <form name="ask" method="POST" action="/ask" data-netlify="true">
         <div className={styles.formField}>
           <label className={styles.label}>
             For week of:
@@ -31,7 +31,7 @@ export default function Ask() {
         </div>
 
         <div className={styles.formField}>
-          <button type="submit" action="/ask" className={`${styles.submit} ${styles.button}`}>Submit</button>
+          <button type="submit" className={`${styles.submit} ${styles.button}`}>Submit</button>
         </div>
       </form>
 
