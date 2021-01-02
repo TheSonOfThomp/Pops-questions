@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 
-const title = "Thanks!"
+const title = "Thanks Pop!"
 
 export default function Thanks() {
   return (
