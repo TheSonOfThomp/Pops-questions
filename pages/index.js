@@ -50,7 +50,7 @@ export default function Home() {
             <div className={styles.formField}>
               <label className={styles.label}>
                 Question date:
-                <select name="questionID" className={styles.select} onChange={handleQuestionChange}>
+                <select name="questionID[]" className={styles.select} onChange={handleQuestionChange}>
                   {
                     questions.map(q => (
                       <option value={q.id} key={q.id}>{formatDate(q.fields["Question Date"])}</option>
