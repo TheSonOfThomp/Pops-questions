@@ -13,7 +13,7 @@ export function AnswersForm() {
   // const { data: questions, error } = useSWR(questionsEndpoint, fetcher)
 
   const [questions, setQuestions] = useState([])
-  userEffect(() => {
+  useEffect(() => {
     fetch(questionsEndpoint)
       .then(resp => resp.json())
       .then(data => {
