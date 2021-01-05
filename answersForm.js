@@ -14,7 +14,7 @@ export function AnswersForm() {
 
   const [questions, setQuestions] = useState([])
   userEffect(() => {
-    fetch(questions)
+    fetch(questionsEndpoint)
       .then(resp => resp.json())
       .then(data => {
         setQuestions(data)
