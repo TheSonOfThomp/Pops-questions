@@ -16,6 +16,7 @@ export default function Home() {
       <h1 className={styles.header}>{title}</h1>
 
       <form name="answers" netlify hidden>
+        <input type="hidden" name="form-name" value="answers" />
         <select name="questionID"></select>
         <textarea name="answer"></textarea>
       </form>
