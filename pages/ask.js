@@ -14,7 +14,7 @@ export default function Ask() {
 
       <h1 className={styles.header}>{title}</h1>
 
-      <form name="ask" method="POST" action="/ask" data-netlify="true">
+      {/* <form name="ask" method="POST" action="/ask" data-netlify="true">
         <input type="hidden" name="form-name" value="ask" />
 
         <div className={styles.formField}>
@@ -40,7 +40,7 @@ export default function Ask() {
         <div className={styles.formField}>
           <button type="submit" className={`${styles.submit} ${styles.button}`}>Submit</button>
         </div>
-      </form>
+      </form> */}
 
     </main>
   )
