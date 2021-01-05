@@ -1,25 +1,18 @@
 import { format, parseISO } from 'date-fns'
+import { Body } from 'node-fetch'
 import { useEffect, useState } from 'react'
 import useSWR from 'swr'
 import styles from './styles/Home.module.css'
 
 const questionsEndpoint = "/.netlify/functions/questions/"
 // const answersEndpoint = "/.netlify/functions/submission-created/"
+const answersEndpoint = "/.netlify/functions/answer/"
 
 const fetcher = (...args) => fetch(...args).then(res => res.json())
 
 export function AnswersForm() {
 
-  // const { data: questions, error } = useSWR(questionsEndpoint, fetcher)
-
-  const [questions, setQuestions] = useState([])
-  useEffect(() => {
-    fetch(questionsEndpoint)
-      .then(resp => resp.json())
-      .then(data => {
-        setQuestions(data)
-      })
-  }, [])
+  const { data: questions, error } = useSWR(questionsEndpoint, fetcher)
 
   const [selectedQuestion, setSelectedQuestion] = useState(0)
   useEffect(() => {
@@ -38,7 +31,12 @@ export function AnswersForm() {
 
   return (
     <>
-    <form name="answers" method="POST" action="/thanks" className={doQuestionsExist ? '' : styles.hasQuestions}>
+    <form 
+      name="answers" 
+      method="POST" 
+      action={answersEndpoint}
+      className={doQuestionsExist ? '' : styles.hasQuestions}
+    >
       <input type="hidden" name="form-name" value="answers" />
       <div className={styles.formField}>
         <label className={styles.label}>
