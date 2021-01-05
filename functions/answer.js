@@ -30,11 +30,11 @@ exports.handler = async function(data) {
 }
 
 async function handleAnswer(questionID, answer) {
-  base('Answers').create([
+  await base('Answers').create([
     {
       fields: {
-        "Answer": answer,
-        "Question": [questionID]
+        "Question": [questionID],
+        "Answer": answer
       }
     }
   ])
