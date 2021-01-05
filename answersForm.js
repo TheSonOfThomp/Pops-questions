@@ -10,9 +10,18 @@ const fetcher = (...args) => fetch(...args).then(res => res.json())
 
 export function AnswersForm() {
 
-  const { data: questions, error } = useSWR(questionsEndpoint, fetcher)
+  // const { data: questions, error } = useSWR(questionsEndpoint, fetcher)
 
-  const [selectedQuestion, setSelectedQuestion] = useState(null)
+  const [questions, setQuestions] = useState([])
+  userEffect(() => {
+    fetch(questions)
+      .then(resp => resp.json())
+      .then(data => {
+        setQuestions(data)
+      })
+  }, [])
+
+  const [selectedQuestion, setSelectedQuestion] = useState(0)
   useEffect(() => {
     if (questions) setSelectedQuestion(questions[0])
   }, [questions])
