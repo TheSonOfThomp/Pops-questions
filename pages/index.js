@@ -43,7 +43,12 @@ export default function Home() {
 
       <h1 className={styles.header}>{title}</h1>
 
-      <form name="answers" method="POST" action="/thanks" encType="application/x-www-form-urlencoded" className={questions ? '': styles.hasQuestions}>
+      <form name="answers" netlify hidden>
+        <select name="questionID"></select>
+        <textarea name="answer"></textarea>
+      </form>
+
+      <form name="answers" method="POST" action="/thanks" className={questions ? '': styles.hasQuestions}>
         <input type="hidden" name="form-name" value="answers" />
         <div className={styles.formField}>
           <label className={styles.label}>
