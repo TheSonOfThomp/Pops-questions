@@ -45,7 +45,7 @@ export default function Home() {
 
       {
         (questions && questions.length > 0) && (
-          <form name="answers" method="POST" action="/thanks" data-netlify="true">
+          <form name="answers" method="POST" action="/thanks" enctype="application/x-www-form-urlencoded">
             <input type="hidden" name="form-name" value="answers" />
             <div className={styles.formField}>
               <label className={styles.label}>
