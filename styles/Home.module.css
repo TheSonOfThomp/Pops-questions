@@ -69,3 +69,11 @@
 .button:not(:focus-visible) {
   outline: unset;
 }
+
+.hasQuestions .select,
+.hasQuestions .label,
+.hasQuestions .question,
+.hasQuestions .textarea,
+.hasQuestions .submit {
+  display: none;
+}

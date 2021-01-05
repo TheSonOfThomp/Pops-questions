@@ -19,7 +19,7 @@ export default function Home() {
       })
   },[])
 
-  const [selectedQuestion, setSelectedQuestion] = useState(0)
+  const [selectedQuestion, setSelectedQuestion] = useState(null)
   useEffect(() => {
     if (questions) {
       setSelectedQuestion(questions[0])
@@ -43,38 +43,34 @@ export default function Home() {
 
       <h1 className={styles.header}>{title}</h1>
 
-      {
-        (questions && questions.length > 0) && (
-          <form name="answers" method="POST" action="/thanks" enctype="application/x-www-form-urlencoded">
-            <input type="hidden" name="form-name" value="answers" />
-            <div className={styles.formField}>
-              <label className={styles.label}>
-                Question date:
-                <select name="questionID" className={styles.select} onChange={handleQuestionChange}>
-                  {
-                    questions.map(q => (
-                      <option value={q.id} key={q.id}>{formatDate(q.fields["Question Date"])}</option>
-                    ))
-                  }
-                </select>
-              </label>
-            </div>
-            <div className={styles.formField}>
-              <p className={styles.question}>
-                {selectedQuestion && selectedQuestion.fields.Question}
-              </p>
-              {(selectedQuestion && selectedQuestion.fields["Asked By"]) && (
-                <p>Asked by: {selectedQuestion.fields["Asked By"]}</p>
-              )}
-              <textarea name="answer" className={styles.textarea}></textarea>
-            </div>
+      <form name="answers" method="POST" action="/thanks" enctype="application/x-www-form-urlencoded" className={questions ? '': styles.hasQuestions}>
+        <input type="hidden" name="form-name" value="answers" />
+        <div className={styles.formField}>
+          <label className={styles.label}>
+            Question date:
+            <select name="questionID" className={styles.select} onChange={handleQuestionChange}>
+              {
+                (questions && questions.length > 0) && questions.map(q => (
+                  <option value={q.id} key={q.id}>{formatDate(q.fields["Question Date"])}</option>
+                ))
+              }
+            </select>
+          </label>
+        </div>
+        <div className={styles.formField}>
+          <p className={styles.question}>
+            {selectedQuestion && selectedQuestion.fields.Question}
+          </p>
+          {(selectedQuestion && selectedQuestion.fields["Asked By"]) && (
+            <p>Asked by: {selectedQuestion.fields["Asked By"]}</p>
+          )}
+          <textarea name="answer" className={styles.textarea}></textarea>
+        </div>
 
-            <div className={styles.formField}>
-              <button type="submit" className={`${styles.submit} ${styles.button}`}>Submit</button>
-            </div>
-          </form>
-        )
-      }
+        <div className={styles.formField}>
+          <button type="submit" className={`${styles.submit} ${styles.button}`}>Submit</button>
+        </div>
+      </form>
 
       {
         (!questions || questions.length == 0) && (
