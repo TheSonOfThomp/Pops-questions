@@ -1,29 +1,29 @@
 import { format, parseISO } from 'date-fns'
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
+import useSWR from 'swr'
 import styles from '../styles/Home.module.css'
 
 const questionsEndpoint = "/.netlify/functions/questions/"
 const answersEndpoint = "/.netlify/functions/submission-created/"
 
+const fetcher = (...args) => fetch(...args).then(res => res.json())
+
 const title = "Pop's Questions"
 
 export default function Home() {
+  const { data: questions, error } = useSWR(questionsEndpoint, fetcher)
 
-  const [questions, setQuestions] = useState(null)
-  useEffect(() => {
-    fetch(questionsEndpoint)
-      .then(resp => resp.json())
-      .then(data => {
-        setQuestions(data)
-      })
-  },[])
+  // console.log(data);
+
+  // const [questions, setQuestions] = useState(null)
+  // useEffect(() => {
+  //   setQuestions(data)
+  // })
 
   const [selectedQuestion, setSelectedQuestion] = useState(null)
   useEffect(() => {
-    if (questions) {
-      setSelectedQuestion(questions[0])
-    }
+    if (questions) setSelectedQuestion(questions[0])
   }, [questions])
 
   const formatDate = (str) => {
@@ -43,7 +43,7 @@ export default function Home() {
 
       <h1 className={styles.header}>{title}</h1>
 
-      <form name="answers" method="POST" action="/thanks" enctype="application/x-www-form-urlencoded" className={questions ? '': styles.hasQuestions}>
+      <form name="answers" method="POST" action="/thanks" encType="application/x-www-form-urlencoded" className={questions ? '': styles.hasQuestions}>
         <input type="hidden" name="form-name" value="answers" />
         <div className={styles.formField}>
           <label className={styles.label}>
@@ -53,6 +53,9 @@ export default function Home() {
                 (questions && questions.length > 0) && questions.map(q => (
                   <option value={q.id} key={q.id}>{formatDate(q.fields["Question Date"])}</option>
                 ))
+              }
+              {
+                (!questions || questions.length === 0) && <option value="—">No questions available</option>
               }
             </select>
           </label>
