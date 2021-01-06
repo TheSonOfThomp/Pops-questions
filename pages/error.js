@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import { useEffect, useState } from 'react';
 import useSWR from 'swr';
-import styles from '../styles/Home.module.css'
+import styles from '../styles/Home.module.scss'
 
 const title = "Something went wrong"
 
@@ -27,6 +27,9 @@ export default function Error() {
         </div>
         <div>
           <strong>Answer: </strong><span>{params?.get('answer')}</span>
+        </div>
+        <div>
+          <strong>Answer: </strong><span>{params?.get('email')}</span>
         </div>
       </p>
       <br/>

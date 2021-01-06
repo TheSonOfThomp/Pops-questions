@@ -12,10 +12,12 @@ exports.handler = async function(data) {
 
   const params = new URLSearchParams(data.body)
 
+  const honeypot = params.get('email')
+
   const questionID = striptags(params.get('questionID'))
   const answer = striptags(params.get('answer')).trim()
 
-  if (questionID && answer) {
+  if (!honeypot && questionID && answer) {
     console.log(questionID, answer);
     // await handleAnswer(questionID, answer)
     const questionText = await getQuestionText(questionID)
@@ -24,8 +26,6 @@ exports.handler = async function(data) {
       question: new URLSearchParams(questionText).toString().replace(/=$/, ''),
       answer: new URLSearchParams(answer).toString().replace(/=$/, '')
     }
-
-    console.log(responseParams);
 
     return {
       statusCode: 301,

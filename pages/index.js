@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import { AnswersForm } from '../answersForm'
-import styles from '../styles/Home.module.css'
+import styles from '../styles/Home.module.scss'
 
 const title = "Pop's Questions"
 

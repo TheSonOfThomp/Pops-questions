@@ -1,5 +1,4 @@
 import { format, parseISO } from 'date-fns'
-import { Body } from 'node-fetch'
 import { useEffect, useState } from 'react'
 import useSWR from 'swr'
 import styles from './styles/Home.module.scss'
@@ -40,6 +39,8 @@ export function AnswersForm() {
       className={doQuestionsExist ? '' : styles.hasQuestions}
     >
       <input type="hidden" name="form-name" value="answers" />
+      <input type="text" name="email" className={styles.honeypot} value=""/>
+
       <div className={styles.formField}>
         <label className={styles.label}>
           Question date:
