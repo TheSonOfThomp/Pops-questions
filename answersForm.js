@@ -1,5 +1,5 @@
 import { format, parseISO } from 'date-fns'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import useSWR from 'swr'
 import styles from './styles/Home.module.scss'
 
@@ -13,12 +13,22 @@ const fetcher = (...args) => fetch(...args).then(res => {
 
 export function AnswersForm() {
 
+  const answerElement = useRef()
+
+  // Get a list of questions
   const { data: questions, error } = useSWR(questionsEndpoint, fetcher)
 
+  // update the selected question
   const [selectedQuestion, setSelectedQuestion] = useState({fields:{Question: ''}})
   useEffect(() => {
     if (questions) setSelectedQuestion(questions[0])
   }, [questions])
+
+  // Update the textarea value when toggling questions
+  useEffect(() => {
+    const currentAnswer = localStorage.getItem(selectedQuestion.id)
+    answerElement.current.value = currentAnswer
+  }, [selectedQuestion])
 
   const formatDate = (str) => {
     return format(parseISO(str), 'MMM do yyyy')
@@ -30,6 +40,10 @@ export function AnswersForm() {
     setSelectedQuestion(questions.find(q => q.id === e.target.value))
   }
 
+  function handleTyping(e) {
+    localStorage.setItem(selectedQuestion.id, e.target.value)
+  }
+
   return (
     <>
     <form 
@@ -39,7 +53,7 @@ export function AnswersForm() {
       className={doQuestionsExist ? '' : styles.hasQuestions}
     >
       <input type="hidden" name="form-name" value="answers" />
-      <input type="text" name="email" className={styles.honeypot} value=""/>
+      <input type="text" name="email" className={styles.honeypot} />
 
       <div className={styles.formField}>
         <label className={styles.label}>
@@ -63,7 +77,7 @@ export function AnswersForm() {
         {(selectedQuestion && selectedQuestion.fields["Asked By"]) && (
           <p>Asked by: {selectedQuestion.fields["Asked By"]}</p>
         )}
-        <textarea required name="answer" className={styles.textarea}></textarea>
+        <textarea ref={answerElement} id={selectedQuestion.id} required name="answer" className={styles.textarea} onChange={handleTyping}></textarea>
       </div>
 
       {
