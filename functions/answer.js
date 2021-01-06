@@ -19,7 +19,7 @@ exports.handler = async function(data) {
 
   if (!honeypot && questionID && answer) {
     console.log(questionID, answer);
-    // await handleAnswer(questionID, answer)
+    await handleAnswer(questionID, answer)
     const questionText = await getQuestionText(questionID)
 
     const responseParams = {
