@@ -60,7 +60,7 @@ export function AnswersForm() {
         {(selectedQuestion && selectedQuestion.fields["Asked By"]) && (
           <p>Asked by: {selectedQuestion.fields["Asked By"]}</p>
         )}
-        <textarea name="answer" className={styles.textarea}></textarea>
+        <textarea required name="answer" className={styles.textarea}></textarea>
       </div>
 
       <div className={styles.formField}>
