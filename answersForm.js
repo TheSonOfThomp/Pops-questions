@@ -1,8 +1,8 @@
 import { format, parseISO } from 'date-fns'
-import { Body } from 'node-fetch'
+import classnames from 'classnames'
 import { useEffect, useState } from 'react'
 import useSWR from 'swr'
-import styles from './styles/Home.module.css'
+import styles from './styles/Home.module.scss'
 
 const questionsEndpoint = "/.netlify/functions/questions/"
 // const answersEndpoint = "/.netlify/functions/submission-created/"
@@ -36,6 +36,7 @@ export function AnswersForm() {
       method="POST" 
       action={answersEndpoint}
       className={doQuestionsExist ? '' : styles.hasQuestions}
+      encType="multipart/form-data"
     >
       <input type="hidden" name="form-name" value="answers" />
       <div className={styles.formField}>
@@ -61,6 +62,18 @@ export function AnswersForm() {
           <p>Asked by: {selectedQuestion.fields["Asked By"]}</p>
         )}
         <textarea required name="answer" className={styles.textarea}></textarea>
+      </div>
+
+      <div className={styles.formField}>
+          <label className={styles.label}>
+            Add a photo?
+            <input type="file"
+              className={styles.upload}
+              id="photo" name="photo"
+              accept="image/png, image/jpeg, image/jpg, image/gif, application/pdf" 
+              />          
+          </label>
+
       </div>
 
       <div className={styles.formField}>
