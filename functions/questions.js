@@ -18,6 +18,13 @@ exports.handler = async function () {
     })
   })
 
+  if (records.error) {
+    return {
+      statusCode: records.statusCode,
+      body: JSON.stringify(records)
+    }
+  }
+
   return {
     statusCode: 200,
     body: JSON.stringify(records)

@@ -1,4 +1,5 @@
 require('dotenv').config()
+const striptags = require('striptags');
 
 var Airtable = require('airtable');
 Airtable.configure({
@@ -11,22 +12,36 @@ exports.handler = async function(data) {
 
   const params = new URLSearchParams(data.body)
 
-  console.log(params.get('questionID'), params.get('answer'));
+  const questionID = striptags(params.get('questionID'))
+  const answer = striptags(params.get('answer')).trim()
 
-  if (params.get('questionID') && params.get('answer')) {
-    await handleAnswer(params.get('questionID'), params.get('answer'))
+  if (questionID && answer) {
+    console.log(questionID, answer);
+    // await handleAnswer(questionID, answer)
+    const questionText = await getQuestionText(questionID)
+
+    const responseParams = {
+      question: new URLSearchParams(questionText).toString().replace(/=$/, ''),
+      answer: new URLSearchParams(answer).toString().replace(/=$/, '')
+    }
+
+    console.log(responseParams);
+
+    return {
+      statusCode: 301,
+      headers: {
+        Location: `/thanks?question=${responseParams.question}&answer=${responseParams.answer}`
+      }
+    }
   } else {
-    console.error('Cannot get parameters');
+    console.error(`Cannot get parameters, ${data.body}`);
+    return {
+      statusCode: 302,
+      headers: {
+        Location: `/error?${data.body}`
+      }
+    }
   }
-
-
-  return {
-    statusCode: 302,
-    headers: {
-      Location: '/thanks'
-    },
-    body: "Hello World"
-  };
 }
 
 async function handleAnswer(questionID, answer) {
@@ -38,4 +53,13 @@ async function handleAnswer(questionID, answer) {
       }
     }
   ])
+}
+
+function getQuestionText(questionID) {
+  return new Promise((resolve, reject) => {
+    base('Questions').find(questionID, (err, record) => {
+      if (err) reject(err)
+      resolve(record.fields['Question'])
+    })
+  })
 }
