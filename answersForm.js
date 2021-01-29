@@ -17,11 +17,12 @@ export function AnswersForm() {
 
   // Get a list of questions
   const { data: questions, error } = useSWR(questionsEndpoint, fetcher)
+  const doQuestionsExist = () => questions && questions.length > 0
 
   // update the selected question
   const [selectedQuestion, setSelectedQuestion] = useState({fields:{Question: ''}})
   useEffect(() => {
-    if (questions) setSelectedQuestion(questions[0])
+    if (doQuestionsExist()) setSelectedQuestion(questions[0])
   }, [questions])
 
   // Update the textarea value when toggling questions
@@ -34,7 +35,6 @@ export function AnswersForm() {
     return format(parseISO(str), 'MMM do yyyy')
   }
 
-  const doQuestionsExist = questions && questions.length > 0
 
   function handleQuestionChange(e) {
     setSelectedQuestion(questions.find(q => q.id === e.target.value))
@@ -50,7 +50,7 @@ export function AnswersForm() {
       name="answers" 
       method="POST" 
       action={answersEndpoint}
-      className={doQuestionsExist ? '' : styles.hasQuestions}
+      className={doQuestionsExist() ? '' : styles.hasQuestions}
     >
       <input type="hidden" name="form-name" value="answers" />
       <input type="text" name="email" className={styles.honeypot} />
@@ -60,7 +60,7 @@ export function AnswersForm() {
           Question date:
             <select name="questionID" className={styles.select} onChange={handleQuestionChange}>
             {
-              doQuestionsExist && questions.map(q => (
+              doQuestionsExist() && questions.map(q => (
                 <option value={q.id} key={q.id}>{formatDate(q.fields["Question Date"])}</option>
               ))
             }
