@@ -81,7 +81,7 @@ export function AnswersForm() {
       </div>
 
       {
-        doQuestionsExist && (
+        doQuestionsExist() && (
           <div className={styles.formField}>
             <button type="submit" className={`${styles.submit} ${styles.button}`}>Submit</button>
           </div>
