@@ -47,6 +47,10 @@ export default function Home() {
         })
       }
 
+      {
+        (!responses && !error) && <h3>Loading responses...</h3>
+      }
+
       { error && (
         <div className={styles.errorNotification}>
           <h2>Couldn't get responses</h2>
