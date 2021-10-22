@@ -1,15 +1,11 @@
 import { format, parseISO } from 'date-fns'
 import { useEffect, useRef, useState } from 'react'
+import { fetcher, formatDate } from './utils'
 import useSWR from 'swr'
 import styles from './styles/Home.module.scss'
 
 const questionsEndpoint = "/.netlify/functions/questions/"
 const answersEndpoint = "/.netlify/functions/answer/"
-
-const fetcher = (...args) => fetch(...args).then(res => {
-  if (res.ok) return res.json()
-  else throw new Error(`Could not fetch questions. Status: ${res.status}. Status Text: ${res.statusText}`)
-})
 
 export function AnswersForm() {
 
@@ -30,11 +26,6 @@ export function AnswersForm() {
     const currentAnswer = localStorage.getItem(selectedQuestion.id)
     answerElement.current.value = currentAnswer
   }, [selectedQuestion])
-
-  const formatDate = (str) => {
-    return format(parseISO(str), 'MMM do yyyy')
-  }
-
 
   function handleQuestionChange(e) {
     setSelectedQuestion(questions.find(q => q.id === e.target.value))
