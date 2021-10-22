@@ -47,12 +47,6 @@ export default function Home() {
         })
       }
 
-      <Link href="/">
-        <span className={`${styles.button} ${styles.button_light}`}>Answer latest question</span>
-      </Link>
-      <br/>
-      <br/>
-
       { error && (
         <div className={styles.errorNotification}>
           <h2>Couldn't get responses</h2>
