@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import Link from 'next/link'
 import { AnswersForm } from '../answersForm'
 import styles from '../styles/Home.module.scss'
 
@@ -17,6 +18,7 @@ export default function Home() {
 
       <AnswersForm />
 
+      <Link href="responses"><span className={`${styles.button} ${styles.button_light}`}>See past responses</span></Link>
     </main>
   )
 }

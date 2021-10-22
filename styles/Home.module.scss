@@ -27,7 +27,7 @@
 
 .container {
   min-height: 100vh;
-  max-width: 1200px;
+  max-width: 768px;
   padding: 0 24px;
   margin: auto;
 }
@@ -110,6 +110,15 @@
 .button {
   @extend %button
 }
+.button_light {
+  background-color: var(--color-navy-5);
+  color: var(--color-navy);
+
+  &:hover,
+  &:focus {
+    background-color: var(--color-navy-10);
+  }
+}
 
 .hasQuestions {
   .submit
@@ -130,5 +139,17 @@
   code {
     max-width: 100%;
     white-space: pre-wrap;
+  }
+}
+
+.response {
+  border: 1px solid var(--color-navy-80);
+  border-radius: 16px;
+  padding: 16px;
+  margin-block: 32px;
+
+  p {
+    font-size: 18px;
+    line-height: 1.33em;
   }
 }
