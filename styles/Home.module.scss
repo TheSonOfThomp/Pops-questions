@@ -29,7 +29,7 @@
   min-height: 100vh;
   max-width: 768px;
   padding: 0 24px;
-  margin: auto;
+  margin: 24px auto;
 }
 
 .header {
@@ -103,13 +103,19 @@
   color: inherit;
 }
 
+.buttonGroup {
+  display: flex;
+  justify-content: space-between;
+}
+
 .submit {
-  float: right;
+  justify-self: flex-end;
 }
 
 .button {
   @extend %button
 }
+
 .button_light {
   background-color: var(--color-navy-5);
   color: var(--color-navy);
@@ -118,6 +124,19 @@
   &:focus {
     background-color: var(--color-navy-10);
   }
+}
+
+.button_small {
+  font-size: 14px;
+  min-width: 96px;
+  padding: 8px;
+  border-radius: 6px;
+}
+
+.inline_button {
+  display: inline;
+  border: none;
+  background-color: inherit;
 }
 
 .hasQuestions {

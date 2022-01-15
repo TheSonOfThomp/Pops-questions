@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import styles from '../styles/Home.module.scss'
 
@@ -20,11 +21,23 @@ export default function Thanks() {
 
       <h1 className={styles.header}>{title}</h1>
 
-      <h3>Here's what we got</h3>
+      <h3>Here's what we got:</h3>
       <p className={styles.question}>{params?.get('question')}</p>
-      <p>{params?.get('answer')}</p>
+      <div>{
+        params?.get('answer').split('\n').map(line => <p>{line}</p>)
+      }</div>
       <br/>
-      <a href="/" className={`${styles.button}`}>Answer another?</a>
+      <div className={`${styles.formField} ${styles.buttonGroup}`}>
+        <Link href={`/edit/${params?.get('answerID')}`}>
+          <span className={`${styles.button}`}>Edit response</span>
+        </Link>
+        <Link href="/">
+          <span className={`${styles.button}`}>Answer another</span>
+        </Link>
+        <Link href="/responses">
+          <span className={`${styles.button} ${styles.button_light}`}>See past responses</span>
+        </Link>
+      </div>
     </main>
   )
 }
