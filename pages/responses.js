@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { fetcher, formatDate } from '../utils'
 import styles from '../styles/Home.module.scss'
 import useSWR from 'swr'
+import { ResponseCard } from '../components/response-card'
 
 const title = "Pop's Responses"
 const responsesEndpoint = "/.netlify/functions/responses/"
@@ -26,23 +27,27 @@ export default function Home() {
       </Link>
 
       {
-        responses && responses.map(response => {
+        doResponsesExist && responses.map(response => {
+
           const {
+            id: answerId,
             fields: {
               Answer: answer,
               'Answered on': date,
-              'Question Text': question
+              'Question Text': question,
+              'Question': questionId,
             }
           } = response
           
           return question && (
-            <div className={styles.response}>
-              <span>{formatDate(date)}</span>
-              <h2>{question[0]}</h2>
-              <div>
-                {answer.split('\n').map(line => <p>{line}</p>)}
-              </div>
-            </div>
+            <ResponseCard
+              key={questionId}
+              date={date}
+              question={question}
+              questionId={questionId}
+              answer={answer}
+              answerId={answerId}
+            />
           )
         })
       }
