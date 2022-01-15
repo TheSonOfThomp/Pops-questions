@@ -32,7 +32,7 @@ export default function Home() {
   }
 
   useEffect(() => {
-    answerElement.current.value = answer
+    answerElement.current.value = answer ?? ''
   }, [answer])
 
   useEffect(() => {
