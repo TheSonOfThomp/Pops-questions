@@ -15,22 +15,34 @@ exports.handler = async function(data) {
   const honeypot = params.get('email')
 
   const questionID = striptags(params.get('questionID'))
+  let answerID = striptags(params.get('answerID'))
   const answer = striptags(params.get('answer')).trim()
 
   if (!honeypot && questionID && answer) {
-    console.log(questionID, answer);
-    await handleAnswer(questionID, answer)
+    console.log(questionID, answerID, answer);
+    
+    if (answerID) {
+      await updateAnswer(answerID, answer)
+    } else {
+      answerID = await handleAnswer(questionID, answer)
+    }
+
     const questionText = await getQuestionText(questionID)
 
     const responseParams = {
       question: new URLSearchParams(questionText).toString().replace(/=$/, ''),
-      answer: new URLSearchParams(answer).toString().replace(/=$/, '')
+      answer: new URLSearchParams(answer
+        .replace(/=/g, '%3D')
+        .replace(/\?/g, '%3F')
+        .replace(/&/g, '%26')
+      ).toString()
+      .replace(/=$/g, '')
     }
 
     return {
       statusCode: 301,
       headers: {
-        Location: `/thanks?question=${responseParams.question}&answer=${responseParams.answer}`
+        Location: `/thanks?answerID=${answerID}&question=${responseParams.question}&answer=${responseParams.answer}`
       }
     }
   } else {
@@ -44,7 +56,14 @@ exports.handler = async function(data) {
   }
 }
 
+async function updateAnswer(answerId, answer) {
+  await base('Answers').update(answerId, {
+    "Answer": answer
+  })
+}
+
 async function handleAnswer(questionID, answer) {
+  let answerId = '';
   await base('Answers').create([
     {
       fields: {
@@ -52,7 +71,11 @@ async function handleAnswer(questionID, answer) {
         "Answer": answer
       }
     }
-  ])
+  ], (err, records) => {
+    if (err) return
+    records.forEach(record => answerId = record.getId())
+  })
+  return answerId
 }
 
 function getQuestionText(questionID) {

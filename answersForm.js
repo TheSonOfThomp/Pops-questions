@@ -1,4 +1,4 @@
-import { format, parseISO } from 'date-fns'
+import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import { fetcher, formatDate } from './utils'
 import useSWR from 'swr'
@@ -73,7 +73,8 @@ export function AnswersForm() {
 
       {
         doQuestionsExist() && (
-          <div className={styles.formField}>
+          <div className={`${styles.formField} ${styles.buttonGroup}`}>
+            <Link href="responses"><span className={`${styles.button} ${styles.button_light}`}>See past responses</span></Link>
             <button type="submit" className={`${styles.submit} ${styles.button}`}>Submit</button>
           </div>
         )

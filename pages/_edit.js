@@ -1,11 +1,16 @@
 import Head from 'next/head'
 import Link from 'next/link'
-import { AnswersForm } from '../answersForm'
+import { fetcher, formatDate } from '../utils'
 import styles from '../styles/Home.module.scss'
+import useSWR from 'swr'
 
-const title = "Pop's Questions"
+const title = "Edit response"
+const responsesEndpoint = "/.netlify/functions/getResponse/"
 
 export default function Home() {
+
+  const { data: responses, error } = useSWR(responsesEndpoint, fetcher)
+  const doResponsesExist = () => responses && responses.length > 0
 
   return (
     <main className={styles.container}>
@@ -16,8 +21,7 @@ export default function Home() {
 
       <h1 className={styles.header}>{title}</h1>
 
-      <AnswersForm />
-
+      
     </main>
   )
 }

@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import Link from 'next/link'
-import { fetcher, formatDate } from '../utils'
+import { fetcher } from '../utils'
 import styles from '../styles/Home.module.scss'
 import useSWR from 'swr'
 import { ResponseCard } from '../components/response-card'
@@ -27,7 +27,7 @@ export default function Home() {
       </Link>
 
       {
-        doResponsesExist && responses.map(response => {
+        responses && responses.map(response => {
 
           const {
             id: answerId,

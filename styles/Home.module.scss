@@ -29,7 +29,7 @@
   min-height: 100vh;
   max-width: 768px;
   padding: 0 24px;
-  margin: auto;
+  margin: 24px auto;
 }
 
 .header {
@@ -103,8 +103,13 @@
   color: inherit;
 }
 
+.buttonGroup {
+  display: flex;
+  justify-content: space-between;
+}
+
 .submit {
-  float: right;
+  justify-self: flex-end;
 }
 
 .button {
