@@ -1,9 +1,11 @@
 import Head from 'next/head'
 import Link from 'next/link'
-import { fetcher } from '../utils'
+import { format, parseISO } from 'date-fns'
+import { fetcher, formatDate } from '../utils'
 import styles from '../styles/Home.module.scss'
 import useSWR from 'swr'
 import { ResponseCard } from '../components/response-card'
+import { useState } from 'react'
 
 const title = "Pop's Responses"
 const responsesEndpoint = "/.netlify/functions/responses/"
@@ -13,6 +15,25 @@ export default function Home() {
   const { data: responses, error } = useSWR(responsesEndpoint, fetcher)
   const doResponsesExist = () => responses && responses.length > 0
 
+  const [filteredResponses, setFilteredResponses] = useState(responses)
+  const handleSearch = ({target: {value}}) => {
+    if (doResponsesExist) {
+      if (value) {
+        setFilteredResponses(responses.filter(resp => {
+          const [text] = resp.fields['Question Text']
+          const date = resp.fields['Answered on']
+          const fullMonthFormat = (date) => format(parseISO(date), 'MMMM do yyyy')
+          const isValueInText = text.toLowerCase().includes(value.toLowerCase())
+          const isValueInDate = formatDate(date).toLowerCase().includes(value.toLowerCase()) 
+            || fullMonthFormat(date).toLowerCase().includes(value.toLowerCase())
+          return isValueInText || isValueInDate
+        }))
+      } else {
+        setFilteredResponses(responses)
+      }
+    } 
+  }
+
   return (
     <main className={styles.container}>
       <Head>
@@ -21,13 +42,23 @@ export default function Home() {
       </Head>
 
       <h1 className={styles.header}>{title}</h1>
+      
+      <div className={styles.space_between}>
+        <Link href="/">
+          <span className={`${styles.button} ${styles.button_light}`}>Answer latest question</span>
+        </Link>
 
-      <Link href="/">
-        <span className={`${styles.button} ${styles.button_light}`}>Answer latest question</span>
-      </Link>
+        <input
+          type="search"
+          placeholder='Search question or date...'
+          onChange={handleSearch}
+          className={styles.search_bar}
+        />
+      </div>
+
 
       {
-        responses && responses.map(response => {
+        doResponsesExist && filteredResponses && filteredResponses.map(response => {
 
           const {
             id: answerId,

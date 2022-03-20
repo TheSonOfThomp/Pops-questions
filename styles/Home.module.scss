@@ -183,3 +183,25 @@
     line-height: 1.33em;
   }
 }
+
+.search_bar {
+  font-family: inherit;
+  color: var(--color-navy);
+  margin: 0 1em;
+  padding: 8px;
+  font-size: 16px;
+  border-radius: 8px;
+  outline: none;
+  border: 2px solid var(--color-navy-50);
+  width: 256px;
+  
+  &::placeholder {
+    color: var(--color-navy-50);
+  }
+}
+
+.space_between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
