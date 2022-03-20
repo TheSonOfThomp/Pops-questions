@@ -84,7 +84,11 @@ export default function Home() {
       }
 
       {
-        (!responses && !error) && <h3>Loading responses...</h3>
+        (doResponsesExist && filteredResponses.length == 0) && <h3>No results found. Try a different search.</h3>
+      }
+
+      {
+        (!doResponsesExist && !error) && <h3>Loading responses...</h3>
       }
 
       { error && (

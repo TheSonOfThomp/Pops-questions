@@ -198,6 +198,11 @@
   &::placeholder {
     color: var(--color-navy-50);
   }
+
+  &::-webkit-search-cancel-button {
+    cursor: pointer;
+    padding: 2px;
+  }
 }
 
 .space_between {
