@@ -1,12 +1,21 @@
 require('dotenv').config()
 const striptags = require('striptags');
+const cloudinary = require('cloudinary').v2;
+const Airtable = require('airtable');
 
-var Airtable = require('airtable');
+// console.log(cloudinary);
+
 Airtable.configure({
   endpointUrl: 'https://api.airtable.com',
   apiKey: process.env.AIRTABLE_API_KEY
 });
-var base = Airtable.base('app6xMKJyDvXBg6uV');
+const base = Airtable.base('app6xMKJyDvXBg6uV');
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_SECTRET,
+})
 
 exports.handler = async function(data) {
 
@@ -17,14 +26,24 @@ exports.handler = async function(data) {
   const questionID = striptags(params.get('questionID'))
   let answerID = striptags(params.get('answerID'))
   const answer = striptags(params.get('answer')).trim()
-
-  if (!honeypot && questionID && answer) {
-    console.log(questionID, answerID, answer);
+  const imageName = striptags(params.get('image-name'))
+  
+  const hasRequiredFields = !honeypot && questionID && answer
+  
+  if (hasRequiredFields) {
+    console.log(questionID, answerID, answer, imageName);
+    const photoBuffer = params.get('photos')
+    
+    let photoUrl;
+    if (photoBuffer) {
+      const photoUpload = await uploadPhoto(photoBuffer)
+      photoUrl = photoUpload.secure_url
+    }
     
     if (answerID) {
-      await updateAnswer(answerID, answer)
+      await updateAnswer(answerID, {answer, photoUrl})
     } else {
-      answerID = await handleAnswer(questionID, answer)
+      answerID = await handleAnswer(questionID, {answer})
     }
 
     const questionText = await getQuestionText(questionID)
@@ -56,19 +75,34 @@ exports.handler = async function(data) {
   }
 }
 
-async function updateAnswer(answerId, answer) {
-  await base('Answers').update(answerId, {
-    "Answer": answer
-  })
+async function updateAnswer(answerId, {answer, photoUrl}) {
+
+  const payload = {
+    "Answer": answer,
+  }
+
+  if (photoUrl) {
+    const existingPhotos = await getExistingPhotos(answerId)
+
+    payload["Photos"] = [
+      ...existingPhotos,
+      {
+        url: photoUrl
+      }
+    ]
+  }
+ 
+  await base('Answers').update(answerId, payload)
 }
 
-async function handleAnswer(questionID, answer) {
+async function handleAnswer(questionID, {answer, photoBuffer}) {
   let answerId = '';
   await base('Answers').create([
     {
       fields: {
         "Question": [questionID],
-        "Answer": answer
+        "Answer": answer,
+        "Photos": photosUrl
       }
     }
   ], (err, records) => {
@@ -85,4 +119,20 @@ function getQuestionText(questionID) {
       resolve(record.fields['Question'])
     })
   })
+}
+
+function getExistingPhotos(answerID) {
+  return new Promise((resolve, reject) => {
+    base('Answers').find(answerID, (err, record) => {
+      if (err) reject(err)
+      resolve(record.fields['Photos'])
+    })
+  })
+}
+
+async function uploadPhoto(photoBuffer) {
+  if (photoBuffer) {
+    const upload = await cloudinary.uploader.upload(photoBuffer)
+    return upload
+  }
 }

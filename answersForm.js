@@ -15,6 +15,13 @@ export function AnswersForm() {
   const { data: questions, error } = useSWR(questionsEndpoint, fetcher)
   const doQuestionsExist = () => questions && questions.length > 0
 
+  // Redirect to "/responses" if there are no more questions
+  useEffect(() => {
+    if (!doQuestionsExist) {
+      window.location.assign("/responses")
+    }
+  }, [questions])
+
   // update the selected question
   const [selectedQuestion, setSelectedQuestion] = useState({fields:{Question: ''}})
   useEffect(() => {
@@ -83,7 +90,10 @@ export function AnswersForm() {
 
     {
       (questions && questions.length == 0) && (
-        <h2>There are no new questions to answer. Come back next week!</h2>
+        <div>
+          <h2>There are no new questions to answer. Come back next week!</h2>
+          <Link href="responses"><span className={`${styles.button} ${styles.button_light}`}>See past responses</span></Link>
+        </div>
       )
     }
 

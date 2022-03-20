@@ -23,6 +23,10 @@
   &:not(:focus-visible) {
     outline: unset;
   }
+
+  :disabled {
+    background-color: var(--color-navy-40);
+  }
 }
 
 .container {
@@ -59,8 +63,12 @@
 }
 
 .upload {
+  margin: 0;
+  overflow: visible;
+
   &:hover,
   &:focus {
+    cursor: pointer;
     &::-webkit-file-upload-button {
       background-color: var(--color-navy-20);
       color: var(--color-navy);
@@ -69,10 +77,13 @@
 
   &::-webkit-file-upload-button {
     @extend %button;
-    background-color: var(--color-navy-20);
-    color: var(--color-navy);
-    margin-right: 8px;
-  
+    @extend .button_small;
+    @extend .button_light;
+    margin: 8px;
+    margin-left: 0;
+    box-shadow: none;
+    border: 2px solid var(--color-navy-30);
+
     &:hover,
     &:focus {
       background-color: var(--color-navy-30);

@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { fetcher, formatDate } from '../../utils'
 import styles from '../../styles/Home.module.scss'
 import useSWR from 'swr'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 const title = "Edit response"
 const answersEndpoint = "/.netlify/functions/answer/"
@@ -45,6 +45,28 @@ export default function Home() {
       answerElement.current.style.height = `${(lines) * 1.5}em`
     }
   }, [answer])
+
+  const readFile = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        resolve(reader.result);
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }; 
+
+  const [file, setFile] = useState(null)
+
+  const handleImageSelection = ({target}) => {
+    setFile('pending')
+    if (target.files.length > 0) {
+      readFile(target.files[0]).then(file => {
+        setFile(file)
+      })
+    }
+  }
   
   return (
     <main className={styles.container}>
@@ -76,14 +98,32 @@ export default function Home() {
                   id={responseId} 
                   name="answer" 
                   className={`${styles.textarea}`} 
-                  // onChange={handleTyping}
                 />
               </div>
+
+              <label htmlFor='photos'> Add a photo: </label>
+              <br/>
+              <input
+                className={`${styles.upload}`}
+                // multiple
+                type="file" 
+                id="photo-upload"
+                name="image-name"
+                accept="image/*"
+                onChange={handleImageSelection}
+              />
+
+              <input type="hidden" name="photos" value={file} />
+
               <div className={`${styles.formField} ${styles.buttonGroup}`}>
                 <Link href="/responses">
                   <span className={`${styles.button} ${styles.button_light}`}>See past responses</span>
                 </Link>
-                <button type="submit" className={`${styles.submit} ${styles.button}`}>Save Changes</button>
+                <button 
+                  type="submit"
+                  disabled={file === 'pending'}
+                  className={`${styles.submit} ${styles.button}`}
+                >Save Changes</button>
               </div>
             </form>
           </div>
