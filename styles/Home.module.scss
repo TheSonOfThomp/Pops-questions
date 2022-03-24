@@ -160,6 +160,15 @@
   } 
 }
 
+.uploaded_image {
+  display: block;
+  margin: auto;
+  max-width: 768px;
+  max-height: 384px;
+  border-radius: 8px;
+  border: 6px ridge var(--color-navy-50);
+}
+
 .codeSnippet {
   padding: 16px;
   max-width: 100%;

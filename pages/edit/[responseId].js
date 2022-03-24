@@ -113,6 +113,8 @@ export default function Home() {
                 onChange={handleImageSelection}
               />
 
+              {file && <img className={styles.uploaded_image} src={file} /> }
+
               <input type="hidden" name="photos" value={file} />
 
               <div className={`${styles.formField} ${styles.buttonGroup}`}>
