@@ -16,6 +16,7 @@ export default function Home() {
   const doResponsesExist = () => responses && responses.length > 0
 
   const [filteredResponses, setFilteredResponses] = useState(responses)
+
   const handleSearch = ({target: {value}}) => {
     if (doResponsesExist) {
       if (value) {
@@ -84,7 +85,7 @@ export default function Home() {
       }
 
       {
-        (doResponsesExist && filteredResponses.length == 0) && <h3>No results found. Try a different search.</h3>
+        (doResponsesExist && filteredResponses && filteredResponses.length == 0) && <h3>No results found. Try a different search.</h3>
       }
 
       {
