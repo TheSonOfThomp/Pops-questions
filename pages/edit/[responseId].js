@@ -22,13 +22,14 @@ export default function Home() {
   
   const answerElement = useRef()
 
-  let questionId, questionText, answer, answerDate
+  let questionId, questionText, answer, answerDate, photos;
 
   if (doesResponseExist) {
     questionId = response?.fields['Question'][0]
     questionText = response?.fields['Question Text'][0]
     answer = response?.fields['Answer']
     answerDate = response?.fields['Answer Date']
+    photos = response?.fields['Photos']
   }
 
   useEffect(() => {
@@ -112,10 +113,25 @@ export default function Home() {
                 accept="image/*"
                 onChange={handleImageSelection}
               />
+              <input type="hidden" name="photos" value={file} />
 
               {file && <img className={styles.uploaded_image} src={file} /> }
 
-              <input type="hidden" name="photos" value={file} />
+              {
+                photos && (
+                  <div className={styles.existing_image_wrapper}>
+                    {
+                      photos.map(photo => (
+                        <img
+                          key={photo.id}
+                          className={styles.existing_image}
+                          src={photo.thumbnails.large.url}
+                        />
+                      ))
+                    }
+                  </div>
+                )
+              }
 
               <div className={`${styles.formField} ${styles.buttonGroup}`}>
                 <Link href="/responses">

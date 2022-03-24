@@ -193,6 +193,21 @@
   }
 }
 
+
+.existing_image_wrapper {
+  margin: 0.5em 0;
+  width: 100%;
+  display: grid;
+  gap: 0.5em;
+  grid-template-columns: repeat(auto-fit, minmax(192px, 1fr));
+}
+
+.existing_image {
+  @extend .uploaded_image;
+  width: 100%;
+  margin: unset;
+}
+
 .search_bar {
   font-family: inherit;
   color: var(--color-navy);
