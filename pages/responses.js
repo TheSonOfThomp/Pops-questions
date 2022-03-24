@@ -5,7 +5,7 @@ import { fetcher, formatDate } from '../utils'
 import styles from '../styles/Home.module.scss'
 import useSWR from 'swr'
 import { ResponseCard } from '../components/response-card'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const title = "Pop's Responses"
 const responsesEndpoint = "/.netlify/functions/responses/"
@@ -16,6 +16,9 @@ export default function Home() {
   const doResponsesExist = () => responses && responses.length > 0
 
   const [filteredResponses, setFilteredResponses] = useState(responses)
+  useEffect(() => {
+    setFilteredResponses(responses)
+  }, [responses])
 
   const handleSearch = ({target: {value}}) => {
     if (doResponsesExist) {
@@ -32,7 +35,7 @@ export default function Home() {
       } else {
         setFilteredResponses(responses)
       }
-    } 
+    }
   }
 
   return (

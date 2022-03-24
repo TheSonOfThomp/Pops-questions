@@ -18,8 +18,8 @@ export const ResponseCard = ({
   const [isExpanded, setExpanded] = useState(false)
 
   const content = isExpanded
-    ? answer.split('\n').map(line => <p>{line}</p>)
-    : (answer.slice(0, collapsedCharLimit) + '...').split('\n').map(line => <p>{line}</p>)
+    ? answer.split('\n').map(line => <p key={line}>{line}</p>)
+    : (answer.slice(0, collapsedCharLimit) + '...').split('\n').map(line => <p key={line}>{line}</p>)
 
   return (
     <div className={styles.response}>
