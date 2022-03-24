@@ -13,6 +13,7 @@ export const ResponseCard = ({
   questionId,
   answer,
   answerId,
+  photos
 }) => {
 
   const [isExpanded, setExpanded] = useState(false)
@@ -27,7 +28,21 @@ export const ResponseCard = ({
       <h2>{question[0]}</h2>
       <div className={cardStyles.content}>
         {content}
+        {isExpanded && photos && (
+          <div className={cardStyles.thumbnail_wrapper}>
+            {
+              photos.map(photo => (
+                <img 
+                  key={photo.id}
+                  className={cardStyles.thumbnail}
+                  src={photo.thumbnails.large.url}
+                />
+              ))
+            }
+          </div>
+        )}
       </div>
+
       <div className={cardStyles.button_wrapper}>
         <button
           className={`${styles.button} ${styles.button_light} ${styles.button_small}`}

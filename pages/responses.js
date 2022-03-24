@@ -71,6 +71,7 @@ export default function Home() {
               'Answered on': date,
               'Question Text': question,
               'Question': questionId,
+              'Photos': photos
             }
           } = response
           
@@ -82,6 +83,7 @@ export default function Home() {
               questionId={questionId}
               answer={answer}
               answerId={answerId}
+              photos={photos}
             />
           )
         })

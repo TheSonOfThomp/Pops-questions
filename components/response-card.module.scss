@@ -7,3 +7,14 @@
   display: flex;
   justify-content: space-between;
 }
+
+.thumbnail_wrapper {
+  margin: 1em 0;
+  display: flex;
+  gap: 8px;
+}
+
+.thumbnail {
+  max-height: 128px;
+}
+
