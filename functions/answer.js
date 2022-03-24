@@ -82,7 +82,7 @@ async function updateAnswer(answerId, {answer, photoUrl}) {
   }
 
   if (photoUrl) {
-    const existingPhotos = await getExistingPhotos(answerId)
+    const existingPhotos = await getExistingPhotos(answerId) ?? []
 
     payload["Photos"] = [
       ...existingPhotos,
