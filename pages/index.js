@@ -55,10 +55,14 @@ export default function Home() {
         <input type="hidden" name="form-name" value="answers" />
         <input type="text" name="email" className={styles.honeypot} />
 
+        {/* QUESTION SELECT */}
         <div className={styles.formField}>
           <label className={styles.label}>
             Question date:
-              <select name="questionID" className={styles.select} onChange={handleQuestionChange}>
+              <select 
+              name="questionID" 
+              className={styles.select} 
+              onChange={handleQuestionChange}>
               {
                 doQuestionsExist() && questions.map(q => (
                   <option value={q.id} key={q.id}>{formatDate(q.fields["Question Date"])}</option>
@@ -70,6 +74,8 @@ export default function Home() {
             </select>
           </label>
         </div>
+
+        {/* QUESTION TEXT */}
         <div className={styles.formField}>
           <p className={styles.question}>
             {selectedQuestion && selectedQuestion.fields.Question}
@@ -77,9 +83,21 @@ export default function Home() {
           {(selectedQuestion && selectedQuestion.fields["Asked By"]) && (
             <p>Asked by: {selectedQuestion.fields["Asked By"]}</p>
           )}
-          <textarea ref={answerElement} id={selectedQuestion.id} required name="answer" className={styles.textarea} onChange={handleTyping}></textarea>
         </div>
 
+        {/* ANSWER text */}
+        <div className={styles.formField}>
+          <textarea
+            ref={answerElement} 
+            id={selectedQuestion.id} 
+            required 
+            name="answer" 
+            className={styles.textarea} 
+            onChange={handleTyping}
+          />
+        </div>
+
+        {/* ACTION BUTTONS */}
         {
           doQuestionsExist() && (
             <div className={`${styles.formField} ${styles.buttonGroup}`}>
@@ -90,6 +108,7 @@ export default function Home() {
         }
       </form>
 
+      {/* EMPTY STATE */}
       {
         (questions && questions.length == 0) && (
           <div>
@@ -99,16 +118,16 @@ export default function Home() {
         )
       }
 
+      {/* ERROR STATE */}
       { error && (
-          <div className={styles.errorNotification}>
-            <h2>Couldn't get the questions</h2>
-            <p>Copy this and send it to Adam</p>
-            <pre className={styles.codeSnippet}>
-              <code>{JSON.stringify(error, Object.getOwnPropertyNames(error), 2)}</code>
-            </pre>
-          </div>
-        )
-      }
+        <div className={styles.errorNotification}>
+          <h2>Couldn't get the questions</h2>
+          <p>Copy this and send it to Adam</p>
+          <pre className={styles.codeSnippet}>
+            <code>{JSON.stringify(error, Object.getOwnPropertyNames(error), 2)}</code>
+          </pre>
+        </div>
+      )}
 
     </main>
   )

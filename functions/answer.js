@@ -102,7 +102,7 @@ async function handleAnswer(questionID, {answer, photoBuffer}) {
       fields: {
         "Question": [questionID],
         "Answer": answer,
-        "Photos": photosUrl
+        "Photos": photoBuffer
       }
     }
   ], (err, records) => {
